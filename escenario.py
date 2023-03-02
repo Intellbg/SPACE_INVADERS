@@ -1,4 +1,7 @@
 import pygame
+from sprites.misil import Misil
+
+from sprites.naves.nave_defensora import NaveDefensora
 
 pygame.init()
 
@@ -9,73 +12,44 @@ SCREEN_HEIGHT = 563
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-background = pygame.image.load('espacio.jpg')
+background = pygame.image.load('assets\img\espacio.jpg')
 background = pygame.transform.scale(background, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 pygame.display.set_caption("SPACE INVADERS")
 
-#BALA
-bala_x = 0
-bala_y = 0
-bala_size = 10
-bala_vel = -2
-
 running = True
 
-def cerrarJuego(running):
-    running = False
-    return running 
 
-width = 70
-height = 70
-image = pygame.transform.scale(pygame.image.load('nave.png'), (width, height))
+def cerrarJuego():
+    return False
+clock = pygame.time.Clock()
 
-nave = image.get_rect()
-
+jugador = NaveDefensora(SCREEN_WIDTH,SCREEN_HEIGHT)
 velocidadNave = 0
-
-nave.y = SCREEN_HEIGHT - 100
-
-
+misil = None
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             cerrarJuego()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                cerrarJuego()
-            if event.key == pygame.K_LEFT:
-                velocidadNave = -1
-            elif event.key == pygame.K_RIGHT:
-                velocidadNave = 1
-            elif event.key == pygame.K_SPACE:
-                bala_x = nave.x + 70/2 - bala_size/2
-                bala_y = nave.y - bala_size
-        elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                velocidadNave = 0
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                misil=jugador.shoot()
 
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT]:
+        jugador.moveX(-1)
+    if keys[pygame.K_RIGHT]:
+        jugador.moveX(1)
+    if  keys[pygame.K_SPACE]:
+        misil = jugador.shoot()
 
-    
-    nave.x += velocidadNave
-
-    # Make sure the square stays within the screen
-    if nave.x < 0:
-        nave.x = 0
-    elif nave.x + 70 > SCREEN_WIDTH:
-        nave.x = SCREEN_WIDTH - 70
-
-    # Update the position of the bala based on its velocity
-    bala_y += bala_vel
-
-    # Check if the bala has gone off the top of the screen
-    if bala_y < 0:
-        bala_y = 0
+    if misil:
+        misil.moveUp()
 
     screen.blit(background, (0, 0))
-    screen.blit(image, nave)
-    pygame.draw.rect(screen, RED, (bala_x, bala_y, bala_size, bala_size))
-
+    screen.blit(jugador.image, jugador.getRect())
+    if misil:
+        pygame.draw.rect(screen, RED, misil.getRect())
     pygame.display.update()
-
+    clock.tick(60)
 pygame.quit()
