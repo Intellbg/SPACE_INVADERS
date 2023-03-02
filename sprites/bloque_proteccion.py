@@ -1,2 +1,3 @@
 class BloqueProteccion:
-    pass
+    resitencia=3
+    pass 
