@@ -56,7 +56,7 @@ while running:
                 velocidadNave = 0
 
 
-    # Update the position of the square based on its velocity
+    
     nave.x += velocidadNave
 
     # Make sure the square stays within the screen
