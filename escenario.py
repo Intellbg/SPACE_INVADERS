@@ -19,10 +19,11 @@ pygame.display.set_caption("SPACE INVADERS")
 
 running = True
 
-
+#REVISAR ERROR
 def cerrarJuego():
     return False
 clock = pygame.time.Clock()
+
 
 jugador = NaveDefensora(SCREEN_WIDTH,SCREEN_HEIGHT)
 velocidadNave = 0
@@ -30,7 +31,7 @@ misil = None
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            cerrarJuego()
+            running = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 misil=jugador.shoot()
