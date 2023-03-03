@@ -3,6 +3,9 @@ from sprites.misil import Misil
 
 from sprites.naves.nave_defensora import NaveDefensora
 
+from sprites.bloque_proteccion import BloqueProteccion
+
+
 pygame.init()
 
 RED = (255, 0, 0)
