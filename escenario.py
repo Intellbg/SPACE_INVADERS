@@ -19,9 +19,6 @@ pygame.display.set_caption("SPACE INVADERS")
 
 running = True
 
-#REVISAR ERROR
-def cerrarJuego():
-    return False
 clock = pygame.time.Clock()
 
 
