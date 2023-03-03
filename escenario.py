@@ -6,14 +6,14 @@ from sprites.naves.nave_defensora import NaveDefensora
 pygame.init()
 
 RED = (255, 0, 0)
+BLACK = (0, 0, 0)
 
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 563
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-background = pygame.image.load('assets\img\espacio.jpg')
-background = pygame.transform.scale(background, (SCREEN_WIDTH, SCREEN_HEIGHT))
+
 
 pygame.display.set_caption("SPACE INVADERS")
 
@@ -46,10 +46,12 @@ while running:
     if misil:
         misil.moveUp()
 
-    screen.blit(background, (0, 0))
+    screen.fill(BLACK)
     screen.blit(jugador.image, jugador.getRect())
     if misil:
         pygame.draw.rect(screen, RED, misil.getRect())
     pygame.display.update()
+
+    
     clock.tick(60)
 pygame.quit()
