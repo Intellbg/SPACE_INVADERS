@@ -14,7 +14,6 @@ SCREEN_HEIGHT = 563
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-
 #PANTALLA DE PAUSA------------------------------------------------------------------------
 font = pygame.font.Font(None, 70)
 
@@ -25,10 +24,15 @@ text_pausa.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 50)
 text_surfaceR = font.render("Presiona la tecla R para continuar", True, (255, 177, 187))
 text_R = text_surfaceR.get_rect()
 text_R.center = (SCREEN_WIDTH // 2  , SCREEN_HEIGHT // 2 + 50)
-
 #----------------------------------------------------------------------------------------
 
+
+#CONFIGURACION PESTAÑA----------------------------------------------------
 pygame.display.set_caption("SPACE INVADERS")
+icono = pygame.image.load('assets/img/UfoRed.png').convert_alpha()
+pygame.display.set_icon(icono)
+#------------------------------------------------------
+
 
 running = True
 final = True
