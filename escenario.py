@@ -68,18 +68,19 @@ missileCollisionable.add(aliens)
 missileCollisionable.add(obstacle.blocks)
 
 class Escenario():
-    
+
     def draw_text(text, font, color, x, y):
         text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect()
         text_rect.center = (x, y)
         screen.blit(text_surface, text_rect)
 
+
     def iniciarPrograma(self):
-        screen.fill(BLACK)
+
         Escenario.draw_text("Bienvenido al Juego", font, RED, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 50)
         Escenario.draw_text("CLICK PARA INICIAR", font, WHITE, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50)
-        pygame.display.flip()
+        pygame.display.update()
 
         primeraPantalla = True
 
@@ -87,6 +88,7 @@ class Escenario():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     primeraPantalla = False
+                    pygame.quit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     Escenario.correrJuego()
     
@@ -113,6 +115,7 @@ class Escenario():
 
     #FUNCION PARA CORRER JUEGO
     def correrJuego():
+        
         global running
         while running:
             for event in pygame.event.get():
