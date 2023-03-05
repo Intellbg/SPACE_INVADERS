@@ -1,4 +1,4 @@
-def ga():
-    return "A"
+from escenario import Escenario
 
-ga()
+juego = Escenario()
+juego.iniciarPrograma()
