@@ -11,6 +11,7 @@ pygame.init()
 RED = (255, 0, 0)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
+GREEN=(0, 255, 0)
 
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 563
@@ -78,7 +79,7 @@ class Escenario():
 
     def iniciarPrograma(self):
 
-        Escenario.draw_text("Bienvenido al Juego", font, RED, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 50)
+        Escenario.draw_text("SPACE INVADERS", font, GREEN, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 50)
         Escenario.draw_text("CLICK PARA INICIAR", font, WHITE, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50)
         pygame.display.update()
 
