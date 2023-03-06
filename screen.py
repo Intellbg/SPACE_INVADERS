@@ -54,27 +54,36 @@ class Screen():
             f"Score: {self.score}", True, (255, 177, 187))
         text_R = text_surfaceScore.get_rect()
         text_R.center = (self.SCREEN_WIDTH // 2, self.SCREEN_HEIGHT // 2 + 50)
-        
-        playText=Text(self.font2,"Jugar",self.SCREEN_WIDTH//2-40, self.SCREEN_HEIGHT//2+50)
-        quitText=Text(self.font2,"Salir",self.SCREEN_WIDTH//2+40, self.SCREEN_HEIGHT//2+50)
 
+        playText = Text(self.font2, "Jugar", self.SCREEN_WIDTH //
+                        2-100, self.SCREEN_HEIGHT//2+125)
+        quitText = Text(self.font2, "Salir", self.SCREEN_WIDTH //
+                        2+100, self.SCREEN_HEIGHT//2+125)
 
         self.screen.fill(self.BLACK)
         while gameover:
-            self.screen.blit(textGameover, textGameoverRect)
-            self.screen.blit(text_surfaceScore, text_R)
-            update()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-
-            key = pygame.key.get_pressed()
-            if key[pygame.K_r]:
-                gameover = False
+                pos = pygame.mouse.get_pos()
+                if event.type == pygame.MOUSEMOTION:
+                    playText.checkHover(pos)
+                    quitText.checkHover(pos)
+                if event.type == pygame.MOUSEBUTTONUP:
+                    if playText.getRect().collidepoint(pos):
+                        gameover = False
+                    if quitText.getRect().collidepoint(pos):
+                        pygame.quit()
+                        sys.exit()
+            update()
+            self.screen.blit(textGameover, textGameoverRect)
+            self.screen.blit(text_surfaceScore, text_R)
+            playText.display(self.screen)
+            quitText.display(self.screen)
         return gameover
 
-    def createAliens(self,height):
+    def createAliens(self, height):
         aliens = Group()
         for i in range(12):
             for j in range(5):
@@ -93,7 +102,7 @@ class Screen():
         lasser = Lasser.getInstance()
         ufo = Ufo.getInstance()
 
-        aliens=self.createAliens(0)
+        aliens = self.createAliens(0)
 
         allSprites = Group()
         allSprites.add(aliens)
@@ -160,7 +169,7 @@ class Screen():
                     self.score += missileCollision.getScore()
                     missileCollision.kill()
                     if len(aliens) == 0:
-                        aliens=self.createAliens(140)
+                        aliens = self.createAliens(140)
                 if isinstance(missileCollision, Ufo):
                     self.score += missileCollision.getScore()
                     missileCollision.gotShoot()
@@ -210,10 +219,13 @@ class Screen():
         self.screen.fill(self.BLACK)
         self.font = pygame.font.SysFont("Consolas", 75)
         self.font2 = pygame.font.SysFont("Consolas", 40)
-        title=Text(self.font,"SPACE INVADERS",self.SCREEN_WIDTH//2, self.SCREEN_HEIGHT//2-50)
-        playText=Text(self.font2,"Jugar",self.SCREEN_WIDTH//2, self.SCREEN_HEIGHT//2+50)
-        quitText=Text(self.font2,"Salir",self.SCREEN_WIDTH//2, self.SCREEN_HEIGHT//2+100)
-        
+        title = Text(self.font, "SPACE INVADERS",
+                     self.SCREEN_WIDTH//2, self.SCREEN_HEIGHT//2-50)
+        playText = Text(self.font2, "Jugar", self.SCREEN_WIDTH //
+                        2, self.SCREEN_HEIGHT//2+50)
+        quitText = Text(self.font2, "Salir", self.SCREEN_WIDTH //
+                        2, self.SCREEN_HEIGHT//2+100)
+
         while displaying:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -230,6 +242,6 @@ class Screen():
                         pygame.quit()
                         sys.exit()
 
-            for button in [playText,quitText,title]:
+            for button in [playText, quitText, title]:
                 button.display(self.screen)
             update()
