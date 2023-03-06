@@ -18,6 +18,8 @@ SCREEN_HEIGHT = 563
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
+
+
 # PANTALLA DE PAUSA------------------------------------------------------------------------
 font = pygame.font.Font(None, 70)
 
@@ -91,6 +93,7 @@ class Escenario():
                     primeraPantalla = False
                     pygame.quit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
+                    pygame.mixer.music.stop()
                     Escenario.correrJuego()
     
 
