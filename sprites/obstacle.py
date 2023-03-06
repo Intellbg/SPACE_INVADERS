@@ -3,7 +3,7 @@ from pygame.sprite import Group
 
 
 class Obstacle ():
-    blockSize = 5
+    blockSize = 20
     obstacleAmount = 4
     yStart=425
 

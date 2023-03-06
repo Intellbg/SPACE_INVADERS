@@ -13,14 +13,14 @@ class Block(Sprite):
 
     def gotShoot(self):
         self.resistance-=1
+        if self.resistance==2:
+            self.image.fill((255,255,0))
+        if self.resistance==1:
+            self.image.fill((255,0,0))
         if self.resistance==0:
             self.kill()
 
     shape = [
-        '  xxxxxxx',
-        ' xxxxxxxxx',
-        'xxxxxxxxxxx',
-        'xxxxxxxxxxx',
-        'xxxxxxxxxxx',
-        'xxx     xxx',
-        'xx       xx']
+        'xxxx',
+        'xxxx',
+    ]
