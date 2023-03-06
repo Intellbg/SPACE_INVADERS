@@ -3,7 +3,7 @@ import sys
 import pygame
 from pygame.sprite import Group, spritecollideany
 from sprites.block import Block
-from sprites.button import Text
+from sprites.text import Text
 from sprites.lasser import Lasser
 from sprites.missile import Missile
 from sprites.obstacle import Obstacle
