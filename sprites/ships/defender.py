@@ -9,7 +9,6 @@ class Defender(Sprite):
     width = 70
     height = 70
     image = scale(load('assets\img\LaserCannon.png'), (width, height))
-    nave = image.get_rect()
     velocity = 4
     life=3
 
