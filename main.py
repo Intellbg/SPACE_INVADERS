@@ -10,5 +10,3 @@ def main():
         screen.playSpaceInvaders()
         gameover=screen.displayGameover()
     pygame.quit()
-
-ga()
