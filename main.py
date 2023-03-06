@@ -11,5 +11,4 @@ def main():
         gameover=screen.displayGameover()
     pygame.quit()
 
-if __name__=="__main__":
-    main()
+ga()
