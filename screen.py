@@ -184,11 +184,11 @@ class Screen():
 
     def pausar(self):
         pausa = True
-        text_surfacePausa = self.font.render("PAUSA", True, (255, 0, 128))
+        text_surfacePausa = self.font2.render("PAUSA", True, (255, 0, 128))
         text_pausa = text_surfacePausa.get_rect()
         text_pausa.center = (self.SCREEN_WIDTH // 2,
                              self.SCREEN_HEIGHT // 2 - 50)
-        text_surfaceR = self.font.render(
+        text_surfaceR = self.font2.render(
             "Presiona la tecla R para continuar", True, (255, 177, 187))
         text_R = text_surfaceR.get_rect()
         text_R.center = (self.SCREEN_WIDTH // 2, self.SCREEN_HEIGHT // 2 + 50)
