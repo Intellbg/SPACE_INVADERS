@@ -5,7 +5,7 @@ from pygame.image import load
 from sprites.missile import Missile
 
 
-class NaveDefensora(Sprite):
+class Defender(Sprite):
     width = 70
     height = 70
     image = scale(load('assets\img\LaserCannon.png'), (width, height))
@@ -27,8 +27,7 @@ class NaveDefensora(Sprite):
 
     def gotShoot(self):
         self.life-=1
-        if self.life==0:
-            return False
+        return self.life!=0
 
     def moveX(self, dx):
         self.rect.x += dx*self.velocity
@@ -37,6 +36,8 @@ class NaveDefensora(Sprite):
         if self.getX() + self.width > self.X_MAX:
             self.rect.x=self.X_MAX - self.width
 
+    def getLife(self):
+        return self.life
 
     def getRect(self):
         return self.rect

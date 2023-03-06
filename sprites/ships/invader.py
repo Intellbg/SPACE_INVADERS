@@ -1,38 +1,20 @@
-import pygame
 from pygame.sprite import Sprite
 from pygame.transform import scale
 from pygame.image import load
-
-
-def change_image_on_event(screen, event, old_image_path, new_image_path):
-
-    # Load the old and new images
-    old_image = pygame.image.load(old_image_path)
-    new_image = pygame.image.load(new_image_path)
-
-    # Check for the specified Pygame event
-    if event.type == pygame.KEYDOWN:
-        # Replace the old image with the new image
-        screen.blit(new_image, (0, 0))
-        # Update the display
-        pygame.display.update()
-    else:
-        # Display the old image
-        screen.blit(old_image, (0, 0))
-        # Update the display
-        pygame.display.update()
+from sprites.lasser import Lasser
 
 
 class Invader(Sprite):
     width = 50
     height = 50
     velocity = 1
-    currentImg=0
-    direction=1
+    currentImg = 0
+    direction = 1
+    score = 20
 
-    def __init__(self, i, j, screen, imgPath=['assets\img\Crab1.png','assets\img\Crab2.png'],):
+    def __init__(self, i, j, screen, imgPath=['assets\img\Crab1.png', 'assets\img\Crab2.png'],):
         super().__init__()
-        self.images=[
+        self.images = [
             scale(load(imgPath[0]), (self.width, self.height)),
             scale(load(imgPath[1]), (self.width, self.height))
         ]
@@ -43,34 +25,42 @@ class Invader(Sprite):
         self.rect.y = j * (self.height-10) + self.height
         self.X_MAX = screen.get_width()
 
-    def moveNave(self):
-        if (position > 0):
-            position -= self.velocity
-        else:
-            if (position < self.X_MAX):
-                position += self.velocity
-
-    def update(self,screenCollision=False):
+    def update(self, screenCollision=False):
         if screenCollision:
-            self.direction*=-1
-            self.rect.y+=self.height
-        self.currentImg+=0.05
+            self.direction *= -1
+            self.rect.y += self.height/2
+        self.currentImg += 0.05
         if self.currentImg >= len(self.images):
-            self.currentImg=0
-            self.image=self.images[0]
+            self.currentImg = 0
+            self.image = self.images[0]
 
-        self.image=self.images[int(self.currentImg)] 
-        self.rect.x+=self.velocity*self.direction
+        self.image = self.images[int(self.currentImg)]
+        self.rect.x += self.velocity*self.direction
 
+    def shoot(self):
+        lasser = Lasser.getInstance()
+        if lasser.shooted == False:
+            lasser.setPosition(self.rect.x + self.width/2, self.rect.y)
 
-        
-
+    def getScore(self):
+        return self.score
+    
+    def getY(self):
+        return self.rect.y
 
 class Squid(Invader):
+    score = 30
+
     def __init__(self, i, j, screen):
-        super().__init__(i, j, screen, ['assets\img\Squid1.png','assets\img\Squid2.png'])
+        super().__init__(i, j, screen, [
+            'assets\img\Squid1.png', 'assets\img\Squid2.png'])
 
 
 class Octopus(Invader):
+    score = 10
+
     def __init__(self, i, j, screen):
-        super().__init__(i, j, screen, ['assets\img\Octopus1.png','assets\img\Octopus2.png'])
+        super().__init__(i, j, screen, [
+            'assets\img\Octopus1.png', 'assets\img\Octopus2.png'])
+
+
