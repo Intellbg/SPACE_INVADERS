@@ -12,7 +12,7 @@ class Invader(Sprite):
     direction = 1
     score = 20
 
-    def __init__(self, i, j, screen, imgPath=['assets\img\Crab1.png', 'assets\img\Crab2.png'],):
+    def __init__(self, i, j, jOffset, screen, imgPath=['assets\img\Crab1.png', 'assets\img\Crab2.png'],):
         super().__init__()
         self.images = [
             scale(load(imgPath[0]), (self.width, self.height)),
@@ -22,7 +22,7 @@ class Invader(Sprite):
         self.screen = screen
         self.rect = self.image.get_rect()
         self.rect.x = i * (self.width-10)
-        self.rect.y = j * (self.height-10) + self.height
+        self.rect.y = j * (self.height-10) + self.height +jOffset
         self.X_MAX = screen.get_width()
 
     def update(self, screenCollision=False):
@@ -44,23 +44,22 @@ class Invader(Sprite):
 
     def getScore(self):
         return self.score
-    
+
     def getY(self):
         return self.rect.y
+
 
 class Squid(Invader):
     score = 30
 
-    def __init__(self, i, j, screen):
-        super().__init__(i, j, screen, [
+    def __init__(self, i, j, jOffset, screen):
+        super().__init__(i, j, jOffset, screen, [
             'assets\img\Squid1.png', 'assets\img\Squid2.png'])
 
 
 class Octopus(Invader):
     score = 10
 
-    def __init__(self, i, j, screen):
-        super().__init__(i, j, screen, [
+    def __init__(self, i, j, jOffset, screen):
+        super().__init__(i, j, jOffset, screen, [
             'assets\img\Octopus1.png', 'assets\img\Octopus2.png'])
-
-

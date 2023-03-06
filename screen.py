@@ -23,6 +23,9 @@ class Screen():
     screen = set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     score = 0
     playing = False
+    
+    missileCollisionable = Group()
+    allSprites = Group()
 
     def __init__(self):
         set_caption("SPACE INVADERS")
@@ -83,50 +86,50 @@ class Screen():
             quitText.display(self.screen)
         return gameover
 
-    def createAliens(self, height):
+    def createAliens(self, jOffset):
         aliens = Group()
-        for i in range(12):
+        for i in range(15):
             for j in range(5):
                 if j == 0:
-                    aliens.add(Squid(i, j+height, self.screen))
+                    aliens.add(Squid(i, j, jOffset, self.screen))
                 elif j > 2:
-                    aliens.add(Octopus(i, j+height, self.screen))
+                    aliens.add(Octopus(i, j, jOffset, self.screen))
                 else:
-                    aliens.add(Invader(i, j+height, self.screen))
+                    aliens.add(Invader(i, j, jOffset, self.screen))
+        self.allSprites.add(aliens)
+        self.missileCollisionable.add(aliens)
         return aliens
 
     def instanceSprites(self):
+        self.allSprites.empty()
+        self.missileCollisionable.empty()
         self.player = Defender(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
         obstacle = Obstacle(self.screen)
         missile = Missile.getInstance()
         lasser = Lasser.getInstance()
         ufo = Ufo.getInstance()
-
         aliens = self.createAliens(0)
 
-        allSprites = Group()
-        allSprites.add(aliens)
-        allSprites.add(self.player)
-        allSprites.add(missile)
-        allSprites.add(lasser)
-        allSprites.add(ufo)
-        allSprites.add(obstacle.blocks)
+        self.allSprites.add(self.player)
+        self.allSprites.add(missile)
+        self.allSprites.add(lasser)
+        self.allSprites.add(ufo)
+        self.allSprites.add(obstacle.blocks)
 
-        missileCollisionable = Group()
-        missileCollisionable.add(aliens)
-        missileCollisionable.add(obstacle.blocks)
-        missileCollisionable.add(ufo)
+        self.missileCollisionable.add(aliens)
+        self.missileCollisionable.add(obstacle.blocks)
+        self.missileCollisionable.add(ufo)
 
         lasserCollisionable = Group()
         lasserCollisionable.add(self.player)
         lasserCollisionable.add(obstacle.blocks)
 
-        return missile, lasser, aliens, ufo, missileCollisionable, lasserCollisionable, allSprites
+        return missile, lasser, aliens, ufo, lasserCollisionable,
 
     def playSpaceInvaders(self):
         self.playing = True
         clock = pygame.time.Clock()
-        missile, lasser, aliens, ufo, missileCollisionable, lasserCollisionable, allSprites = self.instanceSprites()
+        missile, lasser, aliens, ufo, lasserCollisionable = self.instanceSprites()
 
         while self.playing:
             for event in pygame.event.get():
@@ -151,7 +154,7 @@ class Screen():
             randomEnemy.shoot()
 
             self.screen.fill(self.BLACK)
-            allSprites.update()
+            self.allSprites.update()
 
             # Handle aliens of screen
             for alien in aliens:
@@ -161,7 +164,7 @@ class Screen():
                     aliens.update(screenCollision=True)
                     break
 
-            missileCollision = spritecollideany(missile, missileCollisionable)
+            missileCollision = spritecollideany(missile, self.missileCollisionable)
             if missileCollision:
                 if isinstance(missileCollision, Block):
                     missileCollision.gotShoot()
@@ -183,7 +186,7 @@ class Screen():
                     self.playing = lasserCollision.gotShoot()
                 lasser.removeFromScreen()
 
-            for entity in allSprites:
+            for entity in self.allSprites:
                 self.screen.blit(entity.image, entity.rect)
 
             self.displayTextScore()

@@ -22,7 +22,7 @@ class Defender(Sprite):
 
     def shoot(self):
         missile=Missile.getInstance()
-        if missile.getY()==-1:
+        if not missile.wasShooted():
             missile.setPosition(self.getX() + self.width/2, self.getY())
 
     def gotShoot(self):
